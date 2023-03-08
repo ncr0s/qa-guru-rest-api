@@ -1,4 +1,7 @@
+package guru.qa;
+
 import com.github.javafaker.Faker;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -24,8 +27,8 @@ public class PostCreateTest {
             .log().status()
             .log().body()
             .statusCode(201)
-            .body("name", is(body.getName()))
-            .body("job", is(body.getJob()));
+            .body("name", Matchers.is(body.getName()))
+            .body("job", Matchers.is(body.getJob()));
     }
 
     @Test
@@ -43,8 +46,8 @@ public class PostCreateTest {
             .log().status()
             .log().body()
             .statusCode(201)
-            .body("name", is(body.getName()))
-            .body("job", is(body.getJob()));
+            .body("name", Matchers.is(body.getName()))
+            .body("job", Matchers.is(body.getJob()));
     }
 
     @Test
@@ -62,8 +65,8 @@ public class PostCreateTest {
             .log().status()
             .log().body()
             .statusCode(201)
-            .body("name", is(body.getName()))
-            .body("job", is(body.getJob()));
+            .body("name", Matchers.is(body.getName()))
+            .body("job", Matchers.is(body.getJob()));
     }
 
     @Test
@@ -80,7 +83,7 @@ public class PostCreateTest {
             .log().status()
             .log().body()
             .statusCode(201)
-            .body("name", is(body.getName()))
-            .body("job", is(body.getJob()));
+            .body("name", Matchers.is(body.getName()))
+            .body("job", Matchers.is(body.getJob()));
     }
 }

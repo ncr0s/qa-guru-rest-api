@@ -1,3 +1,5 @@
+package guru.qa;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
