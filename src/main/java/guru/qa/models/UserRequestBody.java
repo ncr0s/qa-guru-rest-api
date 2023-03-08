@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class PostUsersRequestBody {
+public class UserRequestBody {
     private String name;
     private String job;
 }

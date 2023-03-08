@@ -1,6 +1,7 @@
 package guru.qa;
 
 import com.github.javafaker.Faker;
+import guru.qa.models.UserRequestBody;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
@@ -8,17 +9,18 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 
-public class PostCreateTest {
+public class PostCreateUserTest {
     Faker faker = new Faker();
 
     @Test
     void createUserTest() {
-        PostUsersRequestBody body = new PostUsersRequestBody()
+        UserRequestBody body = new UserRequestBody()
             .setName(faker.hitchhikersGuideToTheGalaxy().character())
             .setJob(faker.hitchhikersGuideToTheGalaxy().location());
 
         given()
             .log().uri()
+            .log().body()
             .contentType(JSON)
             .body(body)
             .when()
@@ -27,17 +29,18 @@ public class PostCreateTest {
             .log().status()
             .log().body()
             .statusCode(201)
-            .body("name", Matchers.is(body.getName()))
-            .body("job", Matchers.is(body.getJob()));
+            .body("name", is(body.getName()))
+            .body("job", is(body.getJob()));
     }
 
     @Test
     void createUserWithoutNameTest() {
-        PostUsersRequestBody body = new PostUsersRequestBody()
+        UserRequestBody body = new UserRequestBody()
             .setJob(faker.dune().title());
 
         given()
             .log().uri()
+            .log().body()
             .contentType(JSON)
             .body(body)
             .when()
@@ -46,17 +49,18 @@ public class PostCreateTest {
             .log().status()
             .log().body()
             .statusCode(201)
-            .body("name", Matchers.is(body.getName()))
-            .body("job", Matchers.is(body.getJob()));
+            .body("name", is(body.getName()))
+            .body("job", is(body.getJob()));
     }
 
     @Test
     void createUserWithoutJobTest() {
-        PostUsersRequestBody body = new PostUsersRequestBody()
+        UserRequestBody body = new UserRequestBody()
             .setName(faker.lordOfTheRings().character());
 
         given()
             .log().uri()
+            .log().body()
             .contentType(JSON)
             .body(body)
             .when()
@@ -65,16 +69,17 @@ public class PostCreateTest {
             .log().status()
             .log().body()
             .statusCode(201)
-            .body("name", Matchers.is(body.getName()))
-            .body("job", Matchers.is(body.getJob()));
+            .body("name",is(body.getName()))
+            .body("job", is(body.getJob()));
     }
 
     @Test
     void createEmptyUserTest() {
-        PostUsersRequestBody body = new PostUsersRequestBody();
+        UserRequestBody body = new UserRequestBody();
 
         given()
             .log().uri()
+            .log().body()
             .contentType(JSON)
             .body(body)
             .when()
