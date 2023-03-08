@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group 'gutu.qa'
+def slf4jVersion = "1.7.32"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation (
+            "io.rest-assured:rest-assured:5.3.0",
+            "org.junit.jupiter:junit-jupiter:5.9.2",
+            "org.slf4j:slf4j-simple:$slf4jVersion",
+            "com.google.code.gson:gson:2.10.1",
+            "com.github.javafaker:javafaker:1.0.2"
+    )
+    compileOnly "org.projectlombok:lombok:1.18.26"
+    annotationProcessor "org.projectlombok:lombok:1.18.26"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperties(System.getProperties())
+    useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
