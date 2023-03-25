@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.ZonedDateTime;
 
-import static guru.qa.specs.userSpecs.putResponseSpec;
-import static guru.qa.specs.userSpecs.requestSpec;
+import static guru.qa.specs.UserSpecs.putResponseSpec;
+import static guru.qa.specs.UserSpecs.requestSpec;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.time.format.DateTimeFormatter.ISO_INSTANT;
