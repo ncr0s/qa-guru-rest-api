@@ -1,6 +1,11 @@
 package guru.qa.tests;
 
 import guru.qa.models.GetUserResponseModel;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static guru.qa.specs.userSpecs.getResponseSpec;
@@ -9,8 +14,11 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+@Tags({@Tag("REST-API"), @Tag("GET")})
 public class GetUsersTest {
 
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Existing user should be returned by get request")
     @Test
     void getExistingUserTest() {
         GetUserResponseModel response = given(requestSpec)
@@ -28,6 +36,8 @@ public class GetUsersTest {
         assertThat(response.getData().getAvatar()).isEqualTo("https://reqres.in/img/faces/1-image.jpg");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("For non existed user should be returned 404 status with empty body")
     @Test
     void getNonExistingUserTest() {
         GetUserResponseModel response = given(requestSpec)

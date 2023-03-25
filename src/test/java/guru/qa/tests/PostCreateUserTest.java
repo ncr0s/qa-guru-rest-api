@@ -3,6 +3,11 @@ package guru.qa.tests;
 import com.github.javafaker.Faker;
 import guru.qa.models.UserRequestBodyModel;
 import guru.qa.models.PostUserResponseBodyModel;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZonedDateTime;
@@ -13,12 +18,15 @@ import static io.restassured.RestAssured.given;
 import static java.time.format.DateTimeFormatter.ISO_INSTANT;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Tags({@Tag("REST-API"), @Tag("POST")})
 public class PostCreateUserTest {
     Faker faker = new Faker();
     UserRequestBodyModel request = new UserRequestBodyModel();
     PostUserResponseBodyModel response = new PostUserResponseBodyModel();
     String dateTime = ZonedDateTime.now().minusSeconds(1).format(ISO_INSTANT);
 
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("Creating user with name and job")
     @Test
     void createUserTest() {
         request
@@ -38,6 +46,8 @@ public class PostCreateUserTest {
         assertThat(response.getCreatedAt()).isGreaterThanOrEqualTo(dateTime);
     }
 
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Creating user with only job")
     @Test
     void createUserWithoutNameTest() {
         request
@@ -56,6 +66,8 @@ public class PostCreateUserTest {
         assertThat(response.getCreatedAt()).isGreaterThanOrEqualTo(dateTime);
     }
 
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Creating user with only name")
     @Test
     void createUserWithoutJobTest() {
         request
@@ -74,6 +86,8 @@ public class PostCreateUserTest {
         assertThat(response.getCreatedAt()).isGreaterThanOrEqualTo(dateTime);
     }
 
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Creating user without name and job")
     @Test
     void createEmptyUserTest() {
         response = given(requestSpec)
