@@ -11,7 +11,7 @@ import static io.restassured.filter.log.LogDetail.STATUS;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class userSpecs {
+public class UserSpecs {
     public static RequestSpecification requestSpec = with()
         .filter(withCustomTemplates())
         .log().uri()
