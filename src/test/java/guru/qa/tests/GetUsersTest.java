@@ -12,6 +12,7 @@ import static guru.qa.specs.userSpecs.getResponseSpec;
 import static guru.qa.specs.userSpecs.requestSpec;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 
 
 @Tags({@Tag("REST-API"), @Tag("GET")})
@@ -49,5 +50,31 @@ public class GetUsersTest {
             .extract().body().as(GetUserResponseModel.class);
 
         assertThat(response).isEqualTo(new GetUserResponseModel());
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Check users email in response on get users list")
+    @Test
+    void checkEmailWithGroovy() {
+        given(requestSpec)
+            .when()
+            .get("/users")
+            .then()
+            .spec(getResponseSpec)
+            .body("data.findAll{it.email =~/.?@reqres.in/}.email.flatten()",
+                hasItem("george.bluth@reqres.in"));
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Check users last name in response on get users list with pagination")
+    @Test
+    void checkPaginationWithGroovy() {
+        given(requestSpec)
+            .when()
+            .get("/users?page=2")
+            .then()
+            .spec(getResponseSpec)
+            .body("data.findAll{it.last_name=~/./}.last_name",
+                hasItem("Edwards"));
     }
 }
