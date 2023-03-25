@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.time.ZonedDateTime;
 
 import static guru.qa.helpers.CustomApiListener.withCustomTemplates;
+import static guru.qa.specs.userSpecs.putResponseSpec;
+import static guru.qa.specs.userSpecs.requestSpec;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.time.format.DateTimeFormatter.ISO_INSTANT;
@@ -25,18 +27,12 @@ public class PutUpdateUserTest {
             .setName(faker.hitchhikersGuideToTheGalaxy().character())
             .setJob(faker.hitchhikersGuideToTheGalaxy().location());
 
-        response = given()
-            .filter(withCustomTemplates())
-            .log().uri()
-            .log().body()
-            .contentType(JSON)
+        response = given(requestSpec)
             .body(request)
             .when()
             .put("https://reqres.in/api/users/")
             .then()
-            .log().status()
-            .log().body()
-            .statusCode(200)
+            .spec(putResponseSpec)
             .extract().as(PutUserResponseBodyModel.class);
 
         assertThat(response.getName()).isEqualTo(request.getName());
@@ -49,17 +45,12 @@ public class PutUpdateUserTest {
         request
             .setJob(faker.dune().title());
 
-        response = given()
-            .filter(withCustomTemplates())
-            .log().uri()
-            .log().body()
-            .contentType(JSON)
+        response = given(requestSpec)
             .body(request)
             .when()
             .put("https://reqres.in/api/users/")
             .then()
-            .log().status()
-            .log().body()
+            .spec(putResponseSpec)
             .extract().as(PutUserResponseBodyModel.class);
 
         assertThat(response.getName()).isEqualTo(request.getName());
@@ -72,18 +63,13 @@ public class PutUpdateUserTest {
         request
             .setName(faker.lordOfTheRings().character());
 
-        response = given()
-            .filter(withCustomTemplates())
-            .log().uri()
-            .log().body()
+        response = given(requestSpec)
             .contentType(JSON)
             .body(request)
             .when()
             .put("https://reqres.in/api/users/")
             .then()
-            .log().status()
-            .log().body()
-            .statusCode(200)
+            .spec(putResponseSpec)
             .extract().as(PutUserResponseBodyModel.class);
 
         assertThat(response.getName()).isEqualTo(request.getName());
@@ -93,18 +79,13 @@ public class PutUpdateUserTest {
 
     @Test
     void createEmptyUserTest() {
-        response = given()
-            .filter(withCustomTemplates())
-            .log().uri()
-            .log().body()
+        response = given(requestSpec)
             .contentType(JSON)
             .body(request)
             .when()
             .put("https://reqres.in/api/users/")
             .then()
-            .log().status()
-            .log().body()
-            .statusCode(200)
+            .spec(putResponseSpec)
             .extract().as(PutUserResponseBodyModel.class);
 
         assertThat(response.getName()).isEqualTo(request.getName());

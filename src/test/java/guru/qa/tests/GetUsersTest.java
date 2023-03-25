@@ -3,7 +3,8 @@ package guru.qa.tests;
 import guru.qa.models.GetUserResponseModel;
 import org.junit.jupiter.api.Test;
 
-import static guru.qa.helpers.CustomApiListener.withCustomTemplates;
+import static guru.qa.specs.userSpecs.getResponseSpec;
+import static guru.qa.specs.userSpecs.requestSpec;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,14 +13,11 @@ public class GetUsersTest {
 
     @Test
     void getExistingUserTest() {
-        GetUserResponseModel response = given()
-            .filter(withCustomTemplates())
-            .log().uri()
+        GetUserResponseModel response = given(requestSpec)
             .when()
-            .get("https://reqres.in/api/users/1")
+            .get("/users/1")
             .then()
-            .log().status()
-            .log().body()
+            .spec(getResponseSpec)
             .statusCode(200)
             .extract().body().as(GetUserResponseModel.class);
 
@@ -32,14 +30,11 @@ public class GetUsersTest {
 
     @Test
     void getNonExistingUserTest() {
-        GetUserResponseModel response = given()
-            .filter(withCustomTemplates())
-            .log().uri()
+        GetUserResponseModel response = given(requestSpec)
             .when()
-            .get("https://reqres.in/api/users/1312")
+            .get("/users/1312")
             .then()
-            .log().status()
-            .log().body()
+            .spec(getResponseSpec)
             .statusCode(404)
             .extract().body().as(GetUserResponseModel.class);
 
